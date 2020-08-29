@@ -19,7 +19,8 @@ class CreateItemVendasTable extends Migration
             $table->decimal('valor_total',10, 2);
             $table->unsignedBigInteger('venda_id');
             $table->foreign('venda_id')->references('id')->on('vendas');
-            $table->foreign('produto_id')->references('id')->on("produtos");
+            $table->unsignedBigInteger('produto_id');
+            $table->foreign('produto_id')->references('id')->on('produtos');
             $table->timestamps();
         });
     }

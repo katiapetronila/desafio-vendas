@@ -16,11 +16,11 @@ class CreateProdutosTable extends Migration
         Schema::create('produtos', function (Blueprint $table) {
             $table->id();
             $table->string('descriçao');
-            $table->int('estoque');
+            $table->integer('estoque');
             $table->decimal('preco',10,2);
             $table->unsignedBigInteger('fabricante_id');
-            $table->foreign('fabricante_id')->references('id')->on('fabricante');
-            $table->timestamp();
+            $table->foreign('fabricante_id')->references('id')->on('fabricantes');
+            $table->timestamps();
         });
     }
 

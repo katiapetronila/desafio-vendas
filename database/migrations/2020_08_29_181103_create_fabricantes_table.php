@@ -15,6 +15,8 @@ class CreateFabricantesTable extends Migration
     {
         Schema::create('fabricantes', function (Blueprint $table) {
             $table->id();
+            $table->string('nome', 100);
+            $table->string('site', 50);
             $table->timestamps();
         });
     }
