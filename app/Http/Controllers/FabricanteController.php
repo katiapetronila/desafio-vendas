@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\FabricanteDataTable;
+use App\Http\Requests\FabricanteRequest;
+use App\Models\Fabricante;
+use App\Services\FabricanteService;
 use Illuminate\Http\Request;
+use Throwable;
 
 class FabricanteController extends Controller
 {
@@ -11,7 +16,7 @@ class FabricanteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(FabricanteDataTable $fabricanteDataTable)
     {
         return view('fabricante.index');
     }
@@ -32,9 +37,14 @@ class FabricanteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FabricanteRequest $request)
     {
-        //
+        $fabricante = FabricanteService::store($request->all());
+
+        if ($fabricante) {
+            flash('Fabricante cadastrado com sucesso')->success();
+
+            return back();
     }
 
     /**
@@ -45,7 +55,7 @@ class FabricanteController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -54,9 +64,9 @@ class FabricanteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Fabricante $fabricante)
     {
-        //
+        return view('fabricante.form', compact('fabricante'));
     }
 
     /**
@@ -66,9 +76,19 @@ class FabricanteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Fabricante $fabricante)
     {
-        //
+        $fabricante = FabricanteService::update($request->all(), $fabricante);
+
+        if ($fabricante) {
+            flash('Fabricante atualizado com sucesso')->success();
+
+            return back();
+        }
+
+        flash('Erro ao atualizar o fabricante')->error();
+
+        return back()->withInput();
     }
 
     /**
